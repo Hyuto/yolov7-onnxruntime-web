@@ -11,6 +11,10 @@
 
 ---
 
+**[Playground](https://hyuto.github.io/yolov7-onnxruntime-web/)**
+
+---
+
 Object Detection application right in your browser.
 Serving YOLOv7 in browser using onnxruntime-web with `wasm` backend.
 
@@ -35,10 +39,12 @@ YOLOv7 model converted to onnx model.
 
 ```
 used model : yolov7-tiny
-size       : 24 Mb
+size       : 24 MB
 ```
 
 ### Use Another Model
+
+> :warning: **Size Overload** : used YOLOv7 model in this repo is the smallest with size of 24 MB, so other models is definitely bigger than this which can cause memory problems on browser.
 
 Use another YOLOv7 model.
 

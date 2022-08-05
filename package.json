@@ -1,7 +1,7 @@
 {
   "name": "yolov7-onnxruntime-web",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "homepage": "https://hyuto.github.io/yolov7-onnxruntime-web/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -17,7 +17,8 @@
     "build": "yarn setup && react-scripts build",
     "setup": "node ort-wasm-handler.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -44,11 +45,15 @@
     "name": "Wahyu Setianto",
     "url": "https://github.com/Hyuto"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hyuto/yolov7-onnxruntime-web.git"
   },
   "bugs": {
     "url": "https://github.com/Hyuto/yolov7-onnxruntime-web/issues"
+  },
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
   }
 }

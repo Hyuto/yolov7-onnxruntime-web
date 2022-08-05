@@ -57,7 +57,7 @@ const App = () => {
 
   useEffect(() => {
     cv["onRuntimeInitialized"] = () => {
-      ort.InferenceSession.create(`${window.location.origin}/model/${modelName}.onnx`).then(
+      ort.InferenceSession.create(`${process.env.PUBLIC_URL}/model/${modelName}.onnx`).then(
         (yolov7) => {
           setSession(yolov7);
           setLoading(false);
