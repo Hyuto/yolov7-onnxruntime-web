@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/yolov7-onnxruntime-web/static/css/main.bf118aac.css",
-    "main.js": "/yolov7-onnxruntime-web/static/js/main.36cc6af1.js",
+    "main.css": "/yolov7-onnxruntime-web/static/css/main.f7914292.css",
+    "main.js": "/yolov7-onnxruntime-web/static/js/main.61852dba.js",
     "static/js/787.5c7f29a3.chunk.js": "/yolov7-onnxruntime-web/static/js/787.5c7f29a3.chunk.js",
     "index.html": "/yolov7-onnxruntime-web/index.html",
-    "main.bf118aac.css.map": "/yolov7-onnxruntime-web/static/css/main.bf118aac.css.map",
-    "main.36cc6af1.js.map": "/yolov7-onnxruntime-web/static/js/main.36cc6af1.js.map",
+    "main.f7914292.css.map": "/yolov7-onnxruntime-web/static/css/main.f7914292.css.map",
+    "main.61852dba.js.map": "/yolov7-onnxruntime-web/static/js/main.61852dba.js.map",
     "787.5c7f29a3.chunk.js.map": "/yolov7-onnxruntime-web/static/js/787.5c7f29a3.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bf118aac.css",
-    "static/js/main.36cc6af1.js"
+    "static/css/main.f7914292.css",
+    "static/js/main.61852dba.js"
   ]
 }
