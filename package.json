@@ -44,7 +44,6 @@
     "name": "Wahyu Setianto",
     "url": "https://github.com/Hyuto"
   },
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hyuto/yolov7-onnxruntime-web.git"
