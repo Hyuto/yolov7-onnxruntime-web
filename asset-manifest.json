@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.bf118aac.css",
-    "main.js": "/static/js/main.a8d3f9e1.js",
-    "static/js/787.5c7f29a3.chunk.js": "/static/js/787.5c7f29a3.chunk.js",
-    "index.html": "/index.html",
-    "main.bf118aac.css.map": "/static/css/main.bf118aac.css.map",
-    "main.a8d3f9e1.js.map": "/static/js/main.a8d3f9e1.js.map",
-    "787.5c7f29a3.chunk.js.map": "/static/js/787.5c7f29a3.chunk.js.map"
+    "main.css": "/yolov7-onnxruntime-web/static/css/main.bf118aac.css",
+    "main.js": "/yolov7-onnxruntime-web/static/js/main.36cc6af1.js",
+    "static/js/787.5c7f29a3.chunk.js": "/yolov7-onnxruntime-web/static/js/787.5c7f29a3.chunk.js",
+    "index.html": "/yolov7-onnxruntime-web/index.html",
+    "main.bf118aac.css.map": "/yolov7-onnxruntime-web/static/css/main.bf118aac.css.map",
+    "main.36cc6af1.js.map": "/yolov7-onnxruntime-web/static/js/main.36cc6af1.js.map",
+    "787.5c7f29a3.chunk.js.map": "/yolov7-onnxruntime-web/static/js/787.5c7f29a3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.bf118aac.css",
-    "static/js/main.a8d3f9e1.js"
+    "static/js/main.36cc6af1.js"
   ]
 }
