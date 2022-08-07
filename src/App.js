@@ -42,13 +42,13 @@ const App = () => {
     // looping through output
     for (let r = 0; r < output.size; r += output.dims[1]) {
       const data = output.data.slice(r, r + output.dims[1]); // get rows
-      const [x, y, x1, y1, classId, score] = data.slice(1);
-      const w = x1 - x,
-        h = y1 - y;
+      const [x0, y0, x1, y1, classId, score] = data.slice(1);
+      const w = x1 - x0,
+        h = y1 - y0;
       boxes.push({
         classId: classId,
         probability: score,
-        bounding: [x, y, w, h],
+        bounding: [x0, y0, w, h],
       });
     }
 
