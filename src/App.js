@@ -1,90 +1,116 @@
-import React, { useState, useEffect, useRef } from "react";
-import * as ort from "onnxruntime-web";
+import React, { useState, useRef } from "react";
+import { Tensor, InferenceSession } from "onnxruntime-web";
 import Loader from "./components/loader";
-import LocalImageButton from "./components/local-image";
-import { renderBoxes } from "./utils/renderBox";
-import labels from "./utils/labels.json";
+import { detectImage } from "./utils/detect";
 import "./style/App.css";
 
 const App = () => {
   const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState("Loading OpenCV.js...");
+  const [image, setImage] = useState(null);
+  const inputImage = useRef(null);
   const imageRef = useRef(null);
   const canvasRef = useRef(null);
 
   // configs
-  const modelName = "yolov7-tiny";
+  const modelName = "yolov7-tiny.onnx";
+  const modelInputShape = [1, 3, 640, 640];
+  const classThreshold = 0.2;
 
-  /**
-   * Callback function to detect image when loaded
-   */
-  const detectImage = async () => {
-    const mat = cv.imread(imageRef.current); // read from img tag
-    const matC3 = new cv.Mat(640, 640, cv.CV_8UC3); // new image matrix (640 x 640)
-    cv.cvtColor(mat, matC3, cv.COLOR_RGBA2BGR); // RGBA to BGR
-    const input = cv.blobFromImage(
-      matC3,
-      1 / 255.0,
-      new cv.Size(640, 640),
-      new cv.Scalar(0, 0, 0),
-      true,
-      false
-    ); // preprocessing image matrix
-    // release
-    mat.delete();
-    matC3.delete();
+  cv["onRuntimeInitialized"] = async () => {
+    // create session
+    setLoading("Loading YOLOv7 model...");
+    const yolov7 = await InferenceSession.create(`${process.env.PUBLIC_URL}/model/${modelName}`);
 
-    const tensor = new ort.Tensor("float32", input.data32F, [1, 3, 640, 640]); // to ort.Tensor
-    const { output } = await session.run({ images: tensor }); // run session and get output layer
+    // warmup model
+    setLoading("Warming up model...");
+    const tensor = new Tensor(
+      "float32",
+      new Float32Array(modelInputShape.reduce((a, b) => a * b)),
+      modelInputShape
+    );
+    await yolov7.run({ images: tensor });
 
-    const boxes = [];
-
-    // looping through output
-    for (let r = 0; r < output.size; r += output.dims[1]) {
-      const data = output.data.slice(r, r + output.dims[1]); // get rows
-      const [x0, y0, x1, y1, classId, score] = data.slice(1);
-      const w = x1 - x0,
-        h = y1 - y0;
-      boxes.push({
-        classId: classId,
-        probability: score,
-        bounding: [x0, y0, w, h],
-      });
-    }
-
-    renderBoxes(canvasRef, boxes, labels); // Draw boxes
+    setSession(yolov7);
+    setLoading(false);
   };
-
-  useEffect(() => {
-    cv["onRuntimeInitialized"] = () => {
-      ort.InferenceSession.create(`${process.env.PUBLIC_URL}/model/${modelName}.onnx`).then(
-        (yolov7) => {
-          setSession(yolov7);
-          setLoading(false);
-        }
-      );
-    };
-  }, []);
 
   return (
     <div className="App">
-      <h2>
-        Object Detection Using YOLOv7 & <code>onnxruntime-web</code>
-      </h2>
-      {loading ? (
-        <Loader>Getting things ready...</Loader>
-      ) : (
+      {loading && <Loader>{loading}</Loader>}
+      <div className="header">
+        <h1>YOLOv7 Object Detection App</h1>
         <p>
-          <code>onnxruntime-web</code> serving {modelName}
+          YOLOv7 object detection application live on browser powered by{" "}
+          <code>onnxruntime-web</code>
         </p>
-      )}
-
+        <p>
+          Serving : <code className="code">{modelName}</code>
+        </p>
+      </div>
       <div className="content">
-        <img id="img" ref={imageRef} src="#" alt="" />
-        <canvas id="canvas" width={640} height={640} ref={canvasRef} />
+        <img
+          ref={imageRef}
+          src="#"
+          alt=""
+          style={{ display: image ? "block" : "none" }}
+          onLoad={() => {
+            detectImage(
+              imageRef.current,
+              canvasRef.current,
+              session,
+              classThreshold,
+              modelInputShape
+            );
+          }}
+        />
+        <canvas
+          id="canvas"
+          width={modelInputShape[2]}
+          height={modelInputShape[3]}
+          ref={canvasRef}
+        />
       </div>
 
-      <LocalImageButton imageRef={imageRef} callback={detectImage} />
+      <input
+        type="file"
+        ref={inputImage}
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={(e) => {
+          // handle next image to detect
+          if (image) {
+            URL.revokeObjectURL(image);
+            setImage(null);
+          }
+
+          const url = URL.createObjectURL(e.target.files[0]); // create image url
+          imageRef.current.src = url; // set image source
+          setImage(url);
+        }}
+      />
+      <div className="btn-container">
+        <button
+          onClick={() => {
+            inputImage.current.click();
+          }}
+        >
+          Open local image
+        </button>
+        {image && (
+          /* show close btn when there is image */
+          <button
+            onClick={() => {
+              inputImage.current.value = "";
+              imageRef.current.src = "#";
+              URL.revokeObjectURL(image);
+              setImage(null);
+            }}
+          >
+            Close image
+          </button>
+        )}
+      </div>
     </div>
   );
 };

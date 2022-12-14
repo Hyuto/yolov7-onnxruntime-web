@@ -7,14 +7,34 @@
   align-items: center;
 }
 
-.App > .content {
+.App > * {
+  margin: 3px 0;
+}
+
+.header {
+  text-align: center;
+}
+
+.header p {
   margin: 5px 0;
-  position: relative;
+}
+
+.code {
+  padding: 5px;
+  color: greenyellow;
+  background-color: black;
+  border-radius: 5px;
 }
 
 .content > img {
   width: 100%;
-  max-width: 640px;
+  max-width: 720px;
+  max-height: 500px;
+  border-radius: 10px;
+}
+
+.content {
+  position: relative;
 }
 
 .content > canvas {
@@ -25,18 +45,12 @@
   height: 100%;
 }
 
-h2,
-p {
-  text-align: center;
-  margin-bottom: 5px;
-}
-
 button {
   text-decoration: none;
   color: white;
   background-color: black;
   border: 2px solid black;
-  margin: 3px 5px;
+  margin: 0 5px;
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
