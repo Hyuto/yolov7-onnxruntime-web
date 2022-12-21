@@ -13,10 +13,20 @@ export const detectImage = async (image, canvas, session, classThreshold, inputS
   const [modelWidth, modelHeight] = inputShape.slice(2);
 
   const mat = cv.imread(image); // read from img tag
-  const matC3 = new cv.Mat(modelWidth, modelHeight, cv.CV_8UC3); // new image matrix
+  const matC3 = new cv.Mat(mat.rows, mat.cols, cv.CV_8UC3); // new image matrix
   cv.cvtColor(mat, matC3, cv.COLOR_RGBA2BGR); // RGBA to BGR
+
+  // padding image to [n x n] dim
+  const maxSize = Math.max(matC3.rows, matC3.cols); // get max size from width and height
+  const xPad = maxSize - matC3.cols, // set xPadding
+    xRatio = maxSize / matC3.cols; // set xRatio
+  const yPad = maxSize - matC3.rows, // set yPadding
+    yRatio = maxSize / matC3.rows; // set yRatio
+  const matPad = new cv.Mat(); // new mat for padded image
+  cv.copyMakeBorder(matC3, matPad, 0, yPad, 0, xPad, cv.BORDER_CONSTANT, [0, 0, 0, 255]); // padding black
+
   const input = cv.blobFromImage(
-    matC3,
+    matPad,
     1 / 255.0,
     new cv.Size(modelWidth, modelHeight),
     new cv.Scalar(0, 0, 0),
@@ -40,9 +50,15 @@ export const detectImage = async (image, canvas, session, classThreshold, inputS
       boxes.push({
         classId: classId,
         probability: score,
-        bounding: [x0, y0, w, h],
+        bounding: [x0 * xRatio, y0 * yRatio, w * xRatio, h * yRatio],
       });
   }
 
   renderBoxes(canvas, boxes); // Draw boxes
+
+  // release mat opencv
+  mat.delete();
+  matC3.delete();
+  matPad.delete();
+  input.delete();
 };
