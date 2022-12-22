@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/yolov7-onnxruntime-web/static/css/main.7854c1a6.css",
-    "main.js": "/yolov7-onnxruntime-web/static/js/main.1454acd5.js",
+    "main.js": "/yolov7-onnxruntime-web/static/js/main.7971a9df.js",
     "static/js/787.5c7f29a3.chunk.js": "/yolov7-onnxruntime-web/static/js/787.5c7f29a3.chunk.js",
     "index.html": "/yolov7-onnxruntime-web/index.html",
     "main.7854c1a6.css.map": "/yolov7-onnxruntime-web/static/css/main.7854c1a6.css.map",
-    "main.1454acd5.js.map": "/yolov7-onnxruntime-web/static/js/main.1454acd5.js.map",
+    "main.7971a9df.js.map": "/yolov7-onnxruntime-web/static/js/main.7971a9df.js.map",
     "787.5c7f29a3.chunk.js.map": "/yolov7-onnxruntime-web/static/js/787.5c7f29a3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7854c1a6.css",
-    "static/js/main.1454acd5.js"
+    "static/js/main.7971a9df.js"
   ]
 }
